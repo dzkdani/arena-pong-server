@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: arena-pong-relay
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.mjs
+    healthCheckPath: /
+    envVars:
+      - key: SEAT_GRACE_MS
+        value: "45000"

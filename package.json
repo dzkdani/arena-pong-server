@@ -1,0 +1,13 @@
+{
+  "name": "arena-pong-server",
+  "private": true,
+  "type": "module",
+  "description": "Room relay for arena pong — WebSocket pump, no game state, no database.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.22.2"
+  }
+}
