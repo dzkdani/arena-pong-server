@@ -217,5 +217,6 @@ export function closeServer(httpServer) {
 const isMain = process.argv[1] && import.meta.url === new URL(`file:///${process.argv[1].replaceAll("\\", "/")}`).href;
 if (isMain) {
   const port = Number(process.env.PORT ?? 8787);
-  createServer().listen(port, () => console.log(`arena-pong relay on :${port}`));
+  const host = process.env.HOST ?? "0.0.0.0"; // VPS: HOST=127.0.0.1 behind a proxy
+  createServer().listen(port, host, () => console.log(`arena-pong relay on ${host}:${port}`));
 }
