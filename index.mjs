@@ -12,6 +12,7 @@
 // Guests replay causes; the server never reads clocks or rolls dice.
 
 import http from "node:http";
+import { pathToFileURL } from "node:url";
 import { WebSocketServer } from "ws";
 
 const CAUSES = new Set(["start", "seg", "close", "gone"]);
@@ -214,7 +215,14 @@ export function closeServer(httpServer) {
   });
 }
 
-const isMain = process.argv[1] && import.meta.url === new URL(`file:///${process.argv[1].replaceAll("\\", "/")}`).href;
+const isMain = (() => {
+  if (!process.argv[1]) return false;
+  try {
+    return import.meta.url === pathToFileURL(process.argv[1]).href;
+  } catch {
+    return false;
+  }
+})();
 if (isMain) {
   const port = Number(process.env.PORT ?? 8787);
   const host = process.env.HOST ?? "0.0.0.0"; // VPS: HOST=127.0.0.1 behind a proxy
